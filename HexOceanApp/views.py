@@ -1,22 +1,21 @@
 from rest_framework import generics
 
 from HexOceanApp.models import Photo
-from HexOceanApp.serializers import PhotoSerializer
+from HexOceanApp.serializers import GroupBasicPhoto, PhotoSerializer
 
 
 class PhotoListView(generics.ListCreateAPIView):
     queryset = Photo.objects.all()
-    serializer_class = PhotoSerializer
+
+    def get_serializer_class(self):
+        if self.request.user.groups.filter(name="Basic"):
+            return GroupBasicPhoto
+        return PhotoSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        serializer.save()
 
     def get_queryset(self):
         user = self.request.user
-        return Photo.objects.filter(owner=user)
-    #
-    # def post(self, request, *args, **kwargs):
-    #     serializer = self.serializer_class(request.POST)
-    #     if serializer.is_valid():
-    #         serializer.save(owner=request.user)
-    #     return super().post(request, *args, **kwargs)
+        return Photo.objects.filter(owner=user).order_by('-pk')

@@ -39,8 +39,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'easy_thumbnails',
     'HexOceanApp',
 ]
+
+THUMBNAIL_ALIASES = {
+    '':  {
+        'avatar1':  {'size':  (200, 0),  'crop':  True},
+        'avatar2':  {'size':  (400, 0),  'crop':  True},
+    },
+    'basic':  {'avatar1': {'size':  (200, 0),  'crop':  True}, },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.'
+                                'PageNumberPagination',
+    'PAGE_SIZE': 5,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
