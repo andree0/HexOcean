@@ -4,7 +4,7 @@ from HexOceanApp.models import Photo
 from HexOceanApp.serializers import GroupBasicPhoto, PhotoSerializer
 
 
-class PhotoListView(generics.ListCreateAPIView):
+class PhotoListView(generics.ListAPIView):
     queryset = Photo.objects.all()
 
     def get_serializer_class(self):
