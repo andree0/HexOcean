@@ -24,9 +24,9 @@ class Photo(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         basic = Group.objects.get_or_create(name='Basic')
-        instance.groups.add(basic)
-        if not basic.permissions.all():
+        if not basic[0].permissions.all():
             add_photo = Permission.objects.get(codename="add_photo")
             view_thumbnail = Permission.objects.get(codename="view_thumbnail")
-            basic.permissions.set(add_photo, view_thumbnail)
+            basic[0].permissions.add(add_photo, view_thumbnail, )
+        instance.groups.add(basic[0].pk)
 
