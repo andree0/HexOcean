@@ -48,7 +48,6 @@ THUMBNAIL_ALIASES = {
         'avatar1':  {'size':  (200, 0),  'crop':  True},
         'avatar2':  {'size':  (400, 0),  'crop':  True},
     },
-    'basic':  {'avatar1': {'size':  (200, 0),  'crop':  True}, },
 }
 
 REST_FRAMEWORK = {
