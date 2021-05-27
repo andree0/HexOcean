@@ -7,6 +7,7 @@ from HexOceanApp.models import Photo
 
 
 class PhotoSerializer(serializers.ModelSerializer):
+    image = ThumbnailerJSONSerializer(alias="")
 
     class Meta:
         model = Photo
@@ -14,7 +15,7 @@ class PhotoSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'owner', )
 
 
-class GroupBasicPhoto(PhotoSerializer):
+class BasicPhotoSerializer(PhotoSerializer):
     small_thumbnail = serializers.SerializerMethodField()
 
     def get_small_thumbnail(self, obj, *args):
@@ -23,5 +24,8 @@ class GroupBasicPhoto(PhotoSerializer):
 
     class Meta:
         model = Photo
-        fields = ('id', 'small_thumbnail', 'image', 'owner', )
+        fields = ('id', 'small_thumbnail', 'owner', )
         read_only_fields = ('id', 'owner',)
+
+
+# class EnterprisePhotoSerializer(PhotoSerializer):

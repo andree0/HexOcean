@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import Group, Permission, User
 
 from easy_thumbnails.fields import ThumbnailerImageField
 from easy_thumbnails.signals import saved_file
@@ -14,3 +16,17 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.image.url
+
+
+# Creates user's new group 'Basic' if it doesn't exist
+# and sets permissions for its
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        basic = Group.objects.get_or_create(name='Basic')
+        instance.groups.add(basic)
+        if not basic.permissions.all():
+            add_photo = Permission.objects.get(codename="add_photo")
+            view_thumbnail = Permission.objects.get(codename="view_thumbnail")
+            basic.permissions.set(add_photo, view_thumbnail)
+
