@@ -17,8 +17,9 @@ class PhotoSerializer(serializers.ModelSerializer):
 class BasicPhotoSerializer(PhotoSerializer):
     small_thumbnail = serializers.SerializerMethodField()
 
-    def get_small_thumbnail(self, obj, *args):
-        options = THUMBNAIL_ALIASES[""]["avatar1"]
+    @staticmethod
+    def get_small_thumbnail(obj):
+        options = THUMBNAIL_ALIASES[""]["small_thumbnail"]
         return obj.image.get_thumbnail(options).url
 
     class Meta:
