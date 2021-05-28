@@ -31,7 +31,7 @@ class PhotoListView(generics.ListCreateAPIView):
                                      context={'request': request})
         if serializer.is_valid():
             self.perform_create(serializer)
-            if not request.user.has_perm("HexOceanApp.view_photo"):
+            if request.user.groups.filter(name='Basic').exists():
                 serializer.data["image"][
                     "original"] = "Buy Premium or Enterprise account " \
                                   "to see this url"
