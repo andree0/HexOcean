@@ -38,7 +38,7 @@ class PhotoListView(generics.ListCreateAPIView):
                 serializer.data["image"][
                     "large_thumbnail"] = "Buy Premium or Enterprise account " \
                                          "to see this url"
-                return Response(serializer.data,
-                                status=status.HTTP_201_CREATED)
+            return Response(serializer.data,
+                            status=status.HTTP_201_CREATED)
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)

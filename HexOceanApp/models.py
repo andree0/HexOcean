@@ -28,5 +28,6 @@ def create_user_profile(sender, instance, created, **kwargs):
             add_photo = Permission.objects.get(codename="add_photo")
             view_thumbnail = Permission.objects.get(codename="view_thumbnail")
             basic[0].permissions.add(add_photo, view_thumbnail, )
-        instance.groups.add(basic[0].pk)
+        if not instance.is_staff and not instance.is_superuser:
+            instance.groups.add(basic[0].pk)
 

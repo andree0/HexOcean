@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/',
          include('rest_framework.urls', namespace="rest_framework")),
-    path('private/', include('privateurl.urls')),
     path('', PhotoListView.as_view(), name="photo_list"),
 ]
 

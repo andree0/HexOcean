@@ -26,8 +26,11 @@ SECRET_KEY = 'django-insecure-++i(pn6rfv0s^4q@kire!7cy+4ou@#mus$rwmn^2bv09' \
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['0.0.0.0']
-ALLOWED_HOSTS = []
+# for run with docker-compose
+ALLOWED_HOSTS = ['0.0.0.0']
+
+# for run local with sqlite
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -40,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'easy_thumbnails',
-    'privateurl',
     'HexOceanApp',
 ]
 
@@ -98,19 +100,21 @@ WSGI_APPLICATION = 'HexOcean.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# try:
-#     from HexOcean.local_settings import DATABASES
-# except ModuleNotFoundError:
-#     print("Brak konfiguracji bazy danych w pliku local_settings.py!")
-#     print("Uzupełnij dane i spróbuj ponownie!")
-#     exit(0)
+# configuration for run with docker-compose
+try:
+    from HexOcean.local_settings import DATABASES
+except ModuleNotFoundError:
+    print("Brak konfiguracji bazy danych w pliku local_settings.py!")
+    print("Uzupełnij dane i spróbuj ponownie!")
+    exit(0)
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# default configuration for run local
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
